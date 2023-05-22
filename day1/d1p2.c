@@ -36,6 +36,15 @@ void print(const Window* window) {
   printf("\n");
 }
 
+Window* newWindow() {
+  Window* window = (Window*)malloc(sizeof(Window));
+  for (int i = 0; i < WINDOW_SIZE; i++) {
+    window->values[i] = 0;
+  }
+
+  return window;
+}
+
 int main(int argc, char* argv[]) {
   (void)argc;
 
@@ -53,8 +62,7 @@ int main(int argc, char* argv[]) {
   int currentDepth;
   int increases = 0;
 
-  Window window = { .values = {0, 0, 0 }};
-  Window* winptr = &window;
+  Window* winptr = newWindow();
 
   char* result;
   for (int i = 0; i < WINDOW_SIZE; i++) {
