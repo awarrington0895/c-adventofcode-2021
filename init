@@ -1,0 +1,27 @@
+#!/bin/bash
+
+main="#include <stdio.h>
+
+int main(void) {
+  printf(\"Day$1 Part $2 works!\n\");
+}"
+
+dir_name="./day$1"
+file_name="d$1p$2.c"
+input_file="day$1input.txt"
+
+if [ ! -d $dir_name ]; then
+  mkdir $dir_name
+fi
+
+cd $dir_name || exit
+
+if [ -f "./$file_name" ]; then
+  echo "$file_name already exists!"
+  exit 0
+fi
+
+echo "$main" > "d$1p$2.c"
+
+touch $input_file
+
