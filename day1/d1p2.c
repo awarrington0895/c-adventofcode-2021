@@ -37,6 +37,8 @@ void print(const Window* window) {
 }
 
 int main(int argc, char* argv[]) {
+  (void)argc;
+
   const int bufferSize = 8;
   char buffer[bufferSize];
   FILE* file = fopen(argv[1], "r");
@@ -51,7 +53,7 @@ int main(int argc, char* argv[]) {
   int currentDepth;
   int increases = 0;
 
-  Window window = {};
+  Window window = { .values = {0, 0, 0 }};
   Window* winptr = &window;
 
   char* result;
@@ -76,6 +78,8 @@ int main(int argc, char* argv[]) {
 
     if (currentWindowSum > previousWindowSum)
       increases++;
+
+    previousWindowSum = currentWindowSum;
   }
 
   printf("Window increased %d times\n", increases);
