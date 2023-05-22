@@ -1,14 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void) {
+int main(int argc, char* argv[]) {
+  (void)argc;
   const int bufferSize = 8;
   int increaseCount = 0;
   int currentDepth; 
   int previousDepth; 
 
   char buffer[bufferSize];
-  FILE* inputFile = fopen("day1input.txt", "r");
+  FILE* inputFile = fopen(argv[1], "r");
+
+  if (inputFile == NULL) {
+    printf("Cannot open %s\n", argv[1]);
+    return EXIT_FAILURE;
+  }
 
   // Put first value in previousDepth before looping
   fgets(buffer, bufferSize, inputFile);

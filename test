@@ -1,0 +1,30 @@
+#!/bin/bash
+
+CC="clang"
+
+CFLAGS="-Wall -Wextra -std=c2x -pedantic"
+
+# make "d$1" >> /dev/null
+
+if [[ $# -ne 2 ]]; then
+  echo "Not enough arguments";
+  exit 1;
+fi
+
+out_file="./day$1/d$1p$2.out"
+c_file="./day$1/d$1p$2.c"
+input_file="./day$1/day$1input.txt"
+
+if [[ ! -f "$c_file" ]]; then
+  echo "$c_file does not exist!"
+  exit 1
+fi
+
+if [[ ! -f "$input_file" ]]; then
+  echo "Input file $input_file does not exist!"
+  exit 1
+fi
+
+$CC $CFLAGS -o $out_file $c_file 
+
+"./$out_file" $input_file
