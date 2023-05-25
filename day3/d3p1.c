@@ -33,12 +33,12 @@ int main(int argc, char *argv[])
     printf("\n");
   }
 
+  fclose(file);
+
   printf("\n");
 
   for (int i = 0; i < 12; i++)
   {
     printf("%d\n", bits[i]);
   }
-
-  fclose(file);
 }
