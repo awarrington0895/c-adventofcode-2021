@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
   char buffer[bufferSize];
   FILE *file = fopen(argv[1], "r");
 
-  int bits[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int bitCounter[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
   while (fgets(buffer, bufferSize, file) != NULL)
   {
@@ -20,25 +20,49 @@ int main(int argc, char *argv[])
 
       int current = atoi(&currentChar);
 
-      printf("%d", current);
+      // Determine which bit is most common in a column by incrementing/decrementing
+      // array values corresponding to column.  If a particular index value is greater than 0,
+      // then 1 is most common.  If bitCounter[i] < 0 most common is 0.
+      // This assumes that there is a never a case where they are equally common.
       if (current == 1)
       {
-        bits[i]++;
+        bitCounter[i]++;
       }
       else
       {
-        bits[i]--;
+        bitCounter[i]--;
       }
     }
-    printf("\n");
   }
 
   fclose(file);
 
-  printf("\n");
 
+  // Binary representation of Epsilon is the inverse
+  // of binary representation of Gamma
+  int binaryGammaRate[12];
+  int binaryEpsilonRate[12];
+
+  printf("GammaRate \t");
   for (int i = 0; i < 12; i++)
   {
-    printf("%d\n", bits[i]);
+    if (bitCounter[i] > 0) {
+      binaryGammaRate[i] = 1;
+      binaryEpsilonRate[i] = 0;
+    } else {
+      binaryGammaRate[i] = 0;
+      binaryEpsilonRate[i] = 1;
+    }
+    printf("%d", binaryGammaRate[i]);
   }
+
+  printf("\n");
+
+
+  printf("EpsilonRate \t");
+  for (int i = 0; i < 12; i++) {
+    printf("%d", binaryEpsilonRate[i]);
+  }
+
+  printf("\n");
 }
