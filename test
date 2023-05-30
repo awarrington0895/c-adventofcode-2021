@@ -11,20 +11,34 @@ if [[ $# -ne 2 ]]; then
   exit 1;
 fi
 
-out_file="./day$1/d$1p$2.out"
-c_file="./day$1/d$1p$2.c"
-input_file="./day$1/day$1input.txt"
+day_dir="./day$1"
+make_file="Makefile"
+out_file="d${1}p${2}.out"
+c_file="d${1}p${2}.c"
+input_file="day${1}input.txt"
 
-if [[ ! -f "$c_file" ]]; then
-  echo "$c_file does not exist!"
+if [[ -f "${day_dir}/${make_file}" ]]; then
+  cd "$day_dir" || exit
+
+  make >> /dev/null
+  
+  "./$out_file" "./$input_file"
+
+  exit 0
+fi
+
+if [[ ! -f "$day_dir/$make_file" && ! -f "$day_dir/$c_file" ]]; then
+  echo "$day_dir/$c_file does not exist!"
   exit 1
 fi
 
-if [[ ! -f "$input_file" ]]; then
-  echo "Input file $input_file does not exist!"
+if [[ ! -f "$day_dir/$input_file" ]]; then
+  echo "Input file ${day_dir}/${input_file} does not exist!"
   exit 1
 fi
 
-$CC $CFLAGS -o $out_file $c_file 
+if [[ ! -f "$day_dir/$make_file" ]]; then
+  $CC $CFLAGS -o $out_file $c_file 
+fi
 
-"./$out_file" $input_file
+"./$day_dir/$out_file" "./$day_dir/$input_file"
