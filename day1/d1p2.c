@@ -91,6 +91,7 @@ int main(int argc, char* argv[]) {
   }
 
   printf("Window increased %d times\n", increases);
+  free(winptr);
 
   fclose(file);
 }
